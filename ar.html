@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ar Seminuevos| Film Commerce</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html {
+      background: #000;
+    }
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: transparent; /* Transparent to show video */
+      color: #fff;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    body > video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .hero {
+      height: 100vh;
+      background: url("assets/BM4-Front.jpg") center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero > div {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero span {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #bbb;
+      white-space: nowrap;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    section {
+      padding: 120px 8%;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .info {
+      margin-bottom: 80px;
+    }
+
+    .info p {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    /* video rule removed to prevent background video clipping */
+
+    .project-meta {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px 70px;
+      margin-bottom: 60px;
+      display: flex;
+      gap: 100px;
+    }
+
+    .project-meta > div {
+      flex: 1;
+    }
+
+    .project-meta span {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #bbb;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .project-meta p {
+      font-size: 18px;
+      margin: 0;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="back-arrow" aria-label="Volver">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </a>
+    <a href="index.html"><img src="assets/Film Commerce-white.png" alt="Film Commerce Logo"></a>
+    <div class="nav-links">
+      <a href="index.html#contacto" class="nav-link">CONTÁCTANOS</a>
+    </div>
+  </nav>
+
+  <video autoplay muted loop playsinline>
+    <source src="assets/loop-hero.mp4" type="video/mp4">
+  </video>
+
+  <!-- PORTADA -->
+  <div class="hero">
+    <div>
+      <span>BRANDING COMMERCIAL</span>
+      <h1>Video automotriz</h1>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <section>
+   <div class="project-meta">
+  <div>
+    <span>CLIENTE</span>
+    <p>Ar Seminuevos</p>
+  </div>
+  <div>
+    <span>TIPOLOGÍA</span>
+    <p>Branding Commercial</p>
+  </div>
+</div>
+
+
+    <div class="video-container">
+      <iframe 
+        src="https://www.youtube.com/embed/RnhOLSo5YQg?rel=0&modestbranding=1" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <!-- CONTACT BUTTON -->
+  <div class="contact-section">
+    <a href="index.html#contacto" class="contact-btn">Contáctanos</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="assets/Film Commerce-white.png" alt="Film Commerce">
+    <div class="social-icons">
+      <a href="https://www.instagram.com/filmcommerce" target="_blank" aria-label="Instagram">
+        <img src="assets/instagram icono blanco.png" alt="Instagram">
+      </a>
+      <a href="https://www.tiktok.com/@film.commece" target="_blank" aria-label="TikTok">
+        <img src="assets/tiktok icono blanco.png" alt="TikTok">
+      </a>
+    </div>
+    <div>Correo: filmcomerce@gmail.com</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script> 
+  <script>
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // Navbar Links Visibility
+    const navLinks = document.querySelector('.nav-links');
+
+    function raf(time) {
+      lenis.raf(time);
+      
+      // Toggle Navbar Links based on scroll position
+      if (window.scrollY > 100) {
+        navLinks.classList.add('visible');
+      } else {
+        navLinks.classList.remove('visible');
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  </script>
+</body>
+</html>

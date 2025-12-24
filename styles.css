@@ -1,0 +1,303 @@
+/* ===== RESET BÁSICO ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #000; /* Ensure full black background */
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+}
+
+section {
+  padding: 120px 10%;
+}
+
+h1 {
+  font-size: 48px;
+  margin-bottom: 60px;
+  font-weight: 700;
+}
+
+p {
+  max-width: 720px;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* ===== META INFO (CLIENTE / TIPOLOGÍA) ===== */
+.project-meta {
+  display: flex;
+  justify-content: center;   /* centra el BLOQUE */
+  gap: 390px;                /* separación elegante */
+  margin-bottom: 170px;
+}
+
+.meta-item {
+  text-align: left;          /* 🔑 CLAVE: texto editorial */
+}
+
+.meta-item span {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.meta-item p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* ===== VIDEO ===== */
+.video-wrapper {
+  margin-top: 100px;
+}
+
+.video-wrapper video {
+  width: 100%;
+  max-height: 80vh;
+  display: block;
+}
+
+/* YouTube Video Container */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* Ancho máximo para que no se vea gigante */
+  padding-bottom: 56.25%; /* Aspect Ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== LINK ===== */
+a {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #fff;
+  padding: 12px 24px;
+  display: inline-block;
+  margin-top: 80px;
+  font-size: 14px;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  transition: all 0.3s ease;
+}
+
+nav img {
+  height: 220px;
+  transition: height 0.3s ease;
+}
+
+/* Fix for logo link having a border due to generic 'a' rule */
+nav > a {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.back-arrow {
+  position: absolute;
+  left: 5%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  transform: translateX(-5px);
+}
+
+.nav-links {
+  position: absolute;
+  right: 5%;
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.nav-links.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  /* Text only style - Overrides generic 'a' if specificity allows, but generic 'a' has border */
+  border: none !important; 
+  background: transparent;
+  margin-top: 0 !important; /* Reset margin from generic 'a' */
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+  background: transparent;
+}
+
+/* ===== GLASSMORPHISM ===== */
+.glass {
+  /* Más transparente y con gradiente sutil para reflejo */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  /* Blur aumentado para efecto "líquido" */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Bordes más brillantes arriba/izquierda para simular luz */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  /* Sombra suave y brillo interior */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 0 8% 20px 8%; /* Sin padding arriba, mas padding abajo para subir visualmente el contenido */
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  z-index: 2;
+  /* border-top: 1px solid rgba(255,255,255,0.1); Removed border */
+}
+
+footer > img {
+  height: 220px;
+  margin-bottom: 0;
+  object-fit: contain;
+  margin-top: -50px; /* Subimos el logo mas alla del borde superior */
+}
+
+footer div {
+  margin-bottom: 0;
+}
+
+footer strong {
+  color: #fff;
+  display: block;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 5px;
+  margin-top: -80px; /* Subimos más los iconos y el correo */
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  border: none;
+  background: transparent;
+  transition: all 0.3s ease;
+  margin-top: 0; /* Override generic 'a' margin */
+  padding: 0; /* Override generic 'a' padding */
+}
+
+.social-icons a img {
+  /* Base styles */
+  object-fit: contain;
+}
+
+/* Regla especifica para Instagram */
+.social-icons a img[alt="Instagram"] {
+  width: 37.8px;
+  height: 60px;
+}
+
+/* Regla especifica para TikTok */
+.social-icons a img[alt="TikTok"] {
+  width: 70px;
+  height: 60px;
+}
+
+.social-icons a:hover {
+  transform: scale(1.15); /* Expand effect */
+  background: transparent;
+}
+
+/* ===== CONTACT BUTTON (PROJECTS) ===== */
+.contact-section {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 15px 40px;
+  
+  /* Liquid Glass Style */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.05);
+  
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  margin-top: 0 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+

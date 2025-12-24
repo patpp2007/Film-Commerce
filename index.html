@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Film Commerce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #fff;
+    }
+
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      transition: all 0.3s ease;
+    }
+
+    nav img {
+      height: 220px;
+      transition: height 0.3s ease;
+    }
+
+    .nav-links {
+      position: absolute;
+      right: 5%;
+      display: flex;
+      gap: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-links.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+
+
+    section {
+      padding: 100px 8%;
+    }
+
+    /* HERO */
+    .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: transparent; /* Ensure transparent background */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 10vh; /* Lift content up */
+      overflow: hidden;
+      z-index: 0;
+      transition: filter 0.1s ease;
+    }
+
+    .hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .brand {
+      font-size: 14px;
+      letter-spacing: 6px;
+      margin-bottom: 24px;
+    }
+
+    .brand strong {
+      font-weight: 700;
+    }
+
+    .project-slide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease-in-out !important;
+    }
+
+    .project-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    h1 {
+      font-size: 52px;
+      margin: 0 0 12px 0;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 520px;
+    }
+
+    .cta {
+      margin-top: 25px;
+      display: flex;
+      gap: 18px;
+    }
+
+    .btn {
+      padding: 14px 26px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* SECCIONES */
+    h2 {
+      font-size: 34px;
+      margin-bottom: 30px;
+    }
+
+    p {
+      max-width: 720px;
+      line-height: 1.7;
+    }
+
+    .services, .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+    }
+
+    /* CONTACTO */
+    form {
+      max-width: 600px;
+      display: grid;
+      gap: 18px;
+    }
+
+    input, select, textarea {
+      padding: 14px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 16px;
+      background: rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #fff;
+      letter-spacing: 1px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+
+    /* GLASSMORPHISM */
+    .glass {
+      /* Más transparente y con gradiente sutil para reflejo */
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+      /* Blur aumentado para efecto "líquido" */
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      /* Bordes más brillantes arriba/izquierda para simular luz */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      border-left: 1px solid rgba(255, 255, 255, 0.4);
+      /* Sombra suave y brillo interior */
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease; /* Transición lenta de 0.8s */
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 500px;
+      text-align: center;
+      color: #fff;
+      transform: translateY(20px);
+      transition: transform 0.8s ease; /* Movimiento suave al aparecer */
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-content h3 {
+      font-size: 24px;
+      margin: 0 0 20px 0;
+    }
+
+    .modal-content p {
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 30px;
+      background: rgba(37, 211, 102, 0.2);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background: rgba(37, 211, 102, 0.3);
+      border-color: rgba(37, 211, 102, 0.6);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 25px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ccc;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: #fff;
+    }
+
+    /* AMBIENT LIGHTS */
+    .ambient-lights {
+      position: fixed;
+      inset: 0;
+      z-index: 1; /* Above dark overlay, below content */
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .light-beam {
+      position: absolute;
+      filter: blur(30px); /* Menos blur para más definición */
+      opacity: 0; 
+      transition: opacity 0.1s ease, transform 0.1s ease;
+      will-change: opacity, transform;
+      border-radius: 50px;
+      /* Luz más fuerte y blanca */
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3); /* Glow adicional */
+    }
+
+    /* Configuración: Luz viniendo de la derecha, cruzando hacia el centro */
+    
+    .light-1 {
+      top: 25%;
+      right: 10%; /* Más adentro */
+      width: 900px; /* Más larga */
+      height: 50px;
+      transform: rotate(-25deg);
+    }
+
+    .light-2 {
+      top: 40%;
+      right: 20%; /* Bastante adentro */
+      width: 700px;
+      height: 35px;
+      transform: rotate(-25deg);
+    }
+
+    .light-3 {
+      top: 55%;
+      right: 5%;
+      width: 1000px; /* Cruza casi todo */
+      height: 60px;
+      transform: rotate(-25deg);
+    }
+
+    .light-4 {
+      top: 65%;
+      right: 25%;
+      width: 600px;
+      height: 30px;
+      transform: rotate(-25deg);
+    }
+
+    .light-5 {
+      top: 75%;
+      right: 15%;
+      width: 800px;
+      height: 45px;
+      transform: rotate(-25deg);
+    }
+
+    .light-6 {
+      top: 85%;
+      right: 30%;
+      width: 500px;
+      height: 25px;
+      transform: rotate(-25deg);
+    }
+
+    .light-7 {
+      top: 35%;
+      right: 40%; /* Bien al centro */
+      width: 400px;
+      height: 20px;
+      transform: rotate(-25deg);
+      opacity: 0;
+    }
+
+    .light-8 {
+      top: 95%;
+      right: 10%;
+      width: 900px;
+      height: 50px;
+      transform: rotate(-25deg);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <img src="assets/Film Commerce-white.png" alt="Film Commerce">    <div class="nav-links">
+      <a href="#trabajos" class="nav-link">PORTAFOLIO</a>
+      <a href="#contacto" class="nav-link">CONTÁCTANOS</a>
+    </div>  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero-video" src="assets/loop-hero.mp4" autoplay muted loop playsinline></video>
+    <div class="brand"><strong>FILM</strong> COMMERCE</div>
+    <h1>Producción audiovisual de calidad</h1>
+    <p>Para marcas que se toman en serio su imagen</p>
+    <div class="cta">
+      <a href="#contacto" class="btn">Contáctanos</a>
+      <a href="#trabajos" class="btn secondary">Ver trabajos</a>
+    </div>
+  </section>
+
+  <div id="dark-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0); z-index: 1; pointer-events: none;"></div>
+
+  <!-- Ambient Lights -->
+  <div class="ambient-lights">
+    <div class="light-beam light-1"></div>
+    <div class="light-beam light-2"></div>
+    <div class="light-beam light-3"></div>
+    <div class="light-beam light-4"></div>
+    <div class="light-beam light-5"></div>
+    <div class="light-beam light-6"></div>
+    <div class="light-beam light-7"></div>
+    <div class="light-beam light-8"></div>
+  </div>
+
+  <!-- Modal de Confirmación -->
+  <div id="confirmModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Gracias por confiar en Film Commerce</h3>
+      <p>Hemos recibido tu información y estamos evaluando tu proyecto.</p>
+      <p>Si deseas avanzar más rápido, puedes contactarnos directamente por WhatsApp.</p>
+      <a href="https://wa.me/524494686014" class="whatsapp-btn" target="_blank">Contactar por WhatsApp</a>
+      <br>
+      <button id="closeModalBtn" class="back-btn">Atrás</button>
+    </div>
+  </div>
+
+  <!-- QUIÉNES SOMOS (ANIMATED SECTION) -->
+  <!-- Added margin-top: 100vh to prevent overlap with fixed Hero -->
+  <section id="quienes-somos-container" style="height: 300vh; position: relative; z-index: 2; padding: 0; margin-top: 100vh;">
+    <div class="sticky-wrapper" style="position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
+      
+      <!-- Glass Box -->
+      <div id="quienes-glass" class="glass" style="max-width: 800px; transform-origin: center center; transition: transform 0.1s linear; width: 80%;">
+        <h2>Quiénes somos</h2>
+        <p>Somos una productora audiovisual que se enfoca en elevar el nivel de profesionalismo e identidad visual de cada empresa.</p>
+        <p>En Film Commerce creemos que la imagen de una empresa debe reflejar el nivel de la marca que representa.</p>
+        <p>Con el tiempo notamos que muchas empresas —incluso grandes— comunican con contenido que no proyecta su tamaño, su profesionalismo ni su verdadero valor.</p>
+      </div>
+
+      <!-- Focus Text (Hidden initially) -->
+      <div id="focus-text" style="position: absolute; top: 55%; left: 50%; transform: translate(-50%, 100px); width: 80%; max-width: 1000px; text-align: center; opacity: 0; pointer-events: none;">
+        <div class="text-line-wrapper" style="font-family: 'Playfair Display', serif; font-size: 38px; line-height: 1.4; text-shadow: 0 4px 20px rgba(0,0,0,0.8); font-weight: 400; color: #fff;">
+          <div class="text-line" style="transition-delay: 0.1s;">Nuestro enfoque nace de ahí:</div>
+          <div class="text-line" style="transition-delay: 0.4s;">tratar el contenido audiovisual como una parte clave</div>
+          <div class="text-line" style="transition-delay: 0.2s;">de la identidad de una marca</div>
+          <div class="text-line" style="transition-delay: 0.5s;">y cuidar cada detalle para que lo que se muestra</div>
+          <div class="text-line" style="transition-delay: 0.3s;">esté a la altura de lo que la empresa realmente es.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <style>
+    .text-line {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: clip-path;
+      margin-bottom: 5px;
+    }
+    .text-line.visible {
+      clip-path: inset(0 0 0 0);
+    }
+  </style>
+
+  <!-- HORIZONTAL SCROLL SECTION (Qué hacemos + Cómo trabajamos) -->
+  <section id="horizontal-section" style="height: 400vh; position: relative; z-index: 2; padding: 0;">
+    <div class="sticky-wrapper" style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center;">
+      
+      <div id="horizontal-track" style="display: flex; flex-direction: column; justify-content: center; height: 100%; padding-left: 100vw; will-change: transform;">
+        
+        <!-- ROW 1: QUÉ HACEMOS -->
+        <div style="display: flex; gap: 80px; align-items: center;">
+            <!-- Intro Qué Hacemos -->
+            <div class="glass" style="min-width: 400px; flex-shrink: 0;">
+              <h2>Qué hacemos</h2>
+              <p>Soluciones integrales para tu marca.</p>
+            </div>
+
+            <!-- Service 1 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>Video</h3>
+              <p>Producción audiovisual con enfoque en imagen y posicionamiento.</p>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>Fotografía</h3>
+              <p>Imágenes profesionales que comunican calidad.</p>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>Contenido digital</h3>
+              <p>Visuales pensados para plataformas modernas.</p>
+            </div>
+        </div>
+
+        <!-- ROW 2: CÓMO TRABAJAMOS (Shifted Right) -->
+        <div style="display: flex; gap: 40px; align-items: center; margin-left: 400px; margin-top: 60px;">
+            <!-- Intro Cómo Trabajamos -->
+            <div class="glass" style="min-width: 400px; flex-shrink: 0;">
+              <h2>Cómo trabajamos</h2>
+              <p>Un proceso claro y eficiente.</p>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>1. Conocemos tu caso</h3>
+              <p>Nos cuentas qué haces, qué necesitas y para qué lo quieres.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>2. Definimos</h3>
+              <p>Acordamos qué se va a realizar, en qué formato y cómo se va a usar.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>3. Producción</h3>
+              <p>Realizamos la producción de video, fotografía o ambos.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="glass" style="min-width: 300px; flex-shrink: 0;">
+              <h3>4. Entrega</h3>
+              <p>Entregamos el material final listo para usarse.</p>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TRABAJOS -->
+  <section id="trabajos" style="padding:0; position: relative; z-index: 2; height:100vh; overflow:hidden; box-shadow: inset 0 60px 60px -40px rgba(255,255,255,1), inset 0 -60px 60px -40px rgba(255,255,255,1);">
+
+    <!-- PROYECTO 1 -->
+    <div class="project-slide active" style="position:absolute; inset:0; background:url('assets/BM4-Front.jpg') center / cover no-repeat; display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center; color:#fff;">
+        <h2>Branding Commercial</h2>
+        <a href="ar.html" class="btn" style="margin-top:20px;">Ver proyecto</a>
+      </div>
+      <button onclick="showProject(1)" style="position:absolute; right:40px; top:50%; transform:translateY(-50%); background:none; border:none; color:#fff; font-size:40px; cursor:pointer;">›</button>
+    </div>
+
+    <!-- PROYECTO 2 -->
+    <div class="project-slide" style="position:absolute; inset:0; background:url('assets/audi-light.jpg') center / cover no-repeat; display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center; color:#fff;">
+        <h2>Social Media Content</h2>
+        <a href="audi.html" class="btn" style="margin-top:20px;">Ver proyecto</a>
+      </div>
+      <button onclick="showProject(0)" style="position:absolute; left:40px; top:50%; transform:translateY(-50%); background:none; border:none; color:#fff; font-size:40px; cursor:pointer;">‹</button>
+    </div>
+
+  </section>
+
+  <script>
+    const projects = document.querySelectorAll('.project-slide');
+    function showProject(index) {
+      projects.forEach((p, i) => {
+        if (i === index) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      window.scrollTo({ top: el.offsetTop - window.innerHeight, behavior: 'smooth' });
+    }
+
+    const hero = document.querySelector('.hero');
+    const darkOverlay = document.getElementById('dark-overlay');
+    const textElements = document.querySelectorAll('.hero .brand, .hero h1, .hero p, .hero .cta');
+    const lights = document.querySelectorAll('.light-beam');
+    const windowHeight = window.innerHeight;
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const progress = Math.min(scrollY / windowHeight, 1);
+      const blur = progress * 10; // Blur máximo de 10px
+      const textOpacity = 1 - progress; // Opacidad del texto de 1 a 0
+      const darkenAmount = progress * 0.3; // Oscurecimiento hasta 0.3
+      const overlayOpacity = progress * 0.5; // Opacidad del overlay oscuro hasta 0.5 (más sutil)
+      
+      /* Removed dynamic background color change
+      const baseColor = 215;
+      const darkenedColor = Math.round(baseColor * (1 - darkenAmount));
+      hero.style.background = `rgb(${darkenedColor}, ${darkenedColor}, ${darkenedColor})`;
+      */
+
+      hero.style.filter = `blur(${blur}px)`;
+      darkOverlay.style.background = `rgba(0,0,0,${overlayOpacity})`; // Re-enabled for darkening effect
+      textElements.forEach(el => el.style.opacity = textOpacity);
+
+      // Lights Logic
+      // Logic: Start appearing only when approaching the first text box (around 100vh)
+      // ScrollY = 0 (Hero) -> Opacity 0
+      // ScrollY = windowHeight (First Section) -> Opacity High
+      
+      const startFade = windowHeight * 0.5; // Start fading in halfway through hero scroll
+      const endFade = windowHeight * 1.2;   // Fully visible when first section is active
+      
+      let rawOpacity = (scrollY - startFade) / (endFade - startFade);
+      rawOpacity = Math.max(0, Math.min(rawOpacity, 1)); // Clamp between 0 and 1
+      
+      const lightOpacity = rawOpacity * 0.9; // Max opacity 0.9
+      
+      // "Sun Moving" Effect:
+      // Slower vertical movement (parallax) - "baje más lento que el scroll"
+      // If scroll moves 100px, lights move 5px (very slow parallax)
+      
+      const moveY = scrollY * 0.05; 
+      const moveX = scrollY * -0.08; // Subtle horizontal shift
+      const rotateChange = scrollY * 0.005; 
+
+      lights.forEach((light, index) => {
+        // Base rotation is -25deg
+        const currentRotation = -25 - rotateChange;
+        
+        // Stagger the movement slightly for depth
+        const stagger = (index + 1) * 0.08;
+        const finalMoveY = moveY * (1 + stagger * 0.5);
+        const finalMoveX = moveX * (1 + stagger * 0.2);
+
+        light.style.opacity = lightOpacity;
+        light.style.transform = `rotate(${currentRotation}deg) translate(${finalMoveX}px, ${finalMoveY}px)`;
+      });
+
+      // QUIENES SOMOS ANIMATION
+      const quienesSection = document.getElementById('quienes-somos-container');
+      const quienesGlass = document.getElementById('quienes-glass');
+      const focusText = document.getElementById('focus-text');
+
+      if (quienesSection && quienesGlass && focusText) {
+          const sectionTop = quienesSection.offsetTop;
+          const sectionHeight = quienesSection.offsetHeight;
+          const viewportHeight = window.innerHeight;
+          
+          // Check if we are in the scroll range
+          if (scrollY + viewportHeight > sectionTop) {
+              const startScroll = sectionTop;
+              const endScroll = sectionTop + sectionHeight - viewportHeight;
+              const currentScroll = scrollY;
+              
+              let progress = (currentScroll - startScroll) / (endScroll - startScroll);
+              progress = Math.max(0, Math.min(progress, 1));
+              
+              // Animation Logic
+              const smooth = (t) => t * t * (3 - 2 * t);
+
+              let glassScale = 1;
+              let glassOpacity = 1;
+              let glassX = 0;
+              let glassY = 0;
+              let glassBlur = 0;
+              
+              let textY = 100;
+              let textOpacity = 0;
+
+              // Phase 1: Glass moves Left & Blurs (0.0 to 0.4)
+              // "Se haga a la izquierda y se quede ahi desenfocado"
+              if (progress < 0.4) {
+                  let p = progress / 0.4;
+                  glassX = -(p * 350); // Move left 350px
+                  glassScale = 1 - (p * 0.2); // Scale down to 0.8
+                  glassBlur = p * 8; // Blur to 8px
+                  glassOpacity = 1 - (p * 0.4); // Fade slightly to 0.6
+              } else {
+                  glassX = -350;
+                  glassScale = 0.8;
+                  glassBlur = 8;
+                  glassOpacity = 0.6;
+              }
+
+              // Phase 2: Text Appearance & Movement (0.1 to 1.0)
+              if (progress > 0.1) {
+                  // Opacity
+                  let fadeP = (progress - 0.1) / 0.25;
+                  fadeP = Math.max(0, Math.min(fadeP, 1));
+                  textOpacity = smooth(fadeP);
+
+                  // Continuous Upward Movement
+                  let moveP = (progress - 0.1) / 0.9;
+                  moveP = Math.max(0, Math.min(moveP, 1));
+                  
+                  // Text moves 100 -> -50
+                  textY = 100 - (moveP * 150); 
+                  
+                  // Glass Y Sync: "Agarre las mismas fisicas"
+                  // Moves up in sync with text
+                  glassY = -(moveP * 150);
+              }
+              
+              // Phase 3: Trigger Line Reveal (0.2)
+              const textLines = document.querySelectorAll('.text-line');
+              if (progress > 0.2) {
+                  textLines.forEach(line => line.classList.add('visible'));
+              } else {
+                  textLines.forEach(line => line.classList.remove('visible'));
+              }
+              
+              quienesGlass.style.transform = `translate(${glassX}px, ${glassY}px) scale(${glassScale})`;
+              quienesGlass.style.filter = `blur(${glassBlur}px)`;
+              quienesGlass.style.opacity = glassOpacity;
+              
+              focusText.style.opacity = textOpacity;
+              focusText.style.transform = `translate(-50%, ${textY}px)`;
+          }
+      }
+
+      // HORIZONTAL SCROLL LOGIC
+      const horizontalSection = document.getElementById('horizontal-section');
+      // horizontalTrack is defined globally above
+
+      if (horizontalSection && horizontalTrack) {
+          const sectionTop = horizontalSection.offsetTop;
+          const sectionHeight = horizontalSection.offsetHeight;
+          const viewportHeight = window.innerHeight;
+          
+          // Calculate total scrollable width
+          const trackWidth = horizontalTrack.scrollWidth;
+          const maxTranslate = trackWidth - window.innerWidth + 200; // +200 padding
+
+          // Logic: Start moving IMMEDIATELY when section enters viewport (from bottom)
+          // This ensures elements are already moving when they come into view
+          const startScroll = sectionTop - viewportHeight;
+          
+          // End: When section bottom appears at bottom of screen
+          const endScroll = sectionTop + sectionHeight - viewportHeight;
+          
+          if (scrollY > startScroll && scrollY < endScroll) {
+              const currentScroll = scrollY;
+              
+              let progress = (currentScroll - startScroll) / (endScroll - startScroll);
+              progress = Math.max(0, Math.min(progress, 1));
+              
+              // Update the TARGET X. The raf loop handles the smoothing (lerp).
+              horizontalTargetX = maxTranslate * progress;
+          } else if (scrollY <= startScroll) {
+              horizontalTargetX = 0;
+          } else if (scrollY >= endScroll) {
+              horizontalTargetX = maxTranslate;
+          }
+      }
+
+    });
+  </script>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="glass" style="margin-left: 15%; max-width: 600px;">
+    <h2>Contáctanos</h2>
+    <!-- Reemplaza "TU_ID_DE_FORMSPREE" con el código que te den en formspree.io -->
+    <form id="contactForm" action="https://formspree.io/f/mbdrbjja" method="POST">
+      <input type="text" name="nombre" placeholder="Nombre" required />
+      <input type="email" name="email" placeholder="Correo electrónico" required />
+      <input type="tel" name="telefono" placeholder="Celular" required />
+      <input type="text" name="empresa" placeholder="Nombre de la empresa" />
+      <select name="servicio" required>
+        <option value="" disabled selected>Servicio</option>
+        <option value="Fotografía">Fotografía</option>
+        <option value="Video">Video</option>
+        <option value="Contenido digital">Contenido digital</option>
+        <option value="Paquete personalizado">Paquete personalizado</option>
+      </select>
+      <select name="industria" required>
+        <option value="" disabled selected>Industria</option>
+        <option value="Inmuebles">Inmuebles</option>
+        <option value="E-commerce">E-commerce</option>
+        <option value="Gastronomía">Gastronomía</option>
+        <option value="Hoteles">Hoteles</option>
+        <option value="Corporativo">Corporativo</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <textarea name="mensaje" rows="4" placeholder="Cuéntanos más"></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <footer>
+    <img src="assets/Film Commerce-white.png" alt="Film Commerce">
+    <div class="social-icons">
+      <a href="https://www.instagram.com/filmcommerce" target="_blank" aria-label="Instagram">
+        <img src="assets/instagram icono blanco.png" alt="Instagram">
+      </a>
+      <a href="https://www.tiktok.com/@film.commece" target="_blank" aria-label="TikTok">
+        <img src="assets/tiktok icono blanco.png" alt="TikTok">
+      </a>
+    </div>
+    <div>Correo: filmcomerce@gmail.com</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script> 
+  <script>
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // Horizontal Scroll State
+    let horizontalTargetX = 0;
+    let horizontalCurrentX = 0;
+    const horizontalTrack = document.getElementById('horizontal-track');
+
+    // Navbar Links Visibility
+    const navLinks = document.querySelector('.nav-links');
+    
+    function raf(time) {
+      lenis.raf(time);
+      
+      // Smooth Horizontal Lerp
+      // Interpolate currentX towards targetX
+      horizontalCurrentX += (horizontalTargetX - horizontalCurrentX) * 0.08; // 0.08 = smoothness factor
+      
+      if (horizontalTrack) {
+        horizontalTrack.style.transform = `translateX(-${horizontalCurrentX}px)`;
+      }
+
+      // Toggle Navbar Links based on scroll position
+      if (window.scrollY > 100) {
+        navLinks.classList.add('visible');
+      } else {
+        navLinks.classList.remove('visible');
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Manejar envío del formulario
+    const contactForm = document.getElementById('contactForm');
+    const confirmModal = document.getElementById('confirmModal');
+
+    if (contactForm && confirmModal) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Verificar si el usuario ya puso su ID de Formspree
+        if (contactForm.action.includes('TU_ID_DE_FORMSPREE')) {
+            alert('Falta configurar el ID de Formspree en el código HTML.');
+            return;
+        }
+
+        const formData = new FormData(contactForm);
+        
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                contactForm.reset();
+                // Retraso de 1 segundo (1000ms) antes de mostrar el modal
+                setTimeout(() => {
+                    confirmModal.classList.add('active');
+                }, 1000);
+            } else {
+                alert("Hubo un problema al enviar el formulario. Por favor intenta de nuevo.");
+            }
+        } catch (error) {
+            alert("Hubo un problema de conexión. Por favor intenta de nuevo.");
+        }
+      });
+
+      // Cerrar modal al hacer clic fuera del contenido
+      confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+          confirmModal.classList.remove('active');
+        }
+      });
+
+      // Cerrar modal con el botón "Atrás"
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+          confirmModal.classList.remove('active');
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
