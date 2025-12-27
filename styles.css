@@ -301,3 +301,214 @@ footer strong {
   box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
+/* ===== RESPONSIVE DESIGN - MOBILE ===== */
+@media (max-width: 768px) {
+  /* Navbar móvil */
+  nav {
+    height: 60px;
+    padding: 8px 0;
+  }
+
+  nav img {
+    height: 140px;
+  }
+
+  .back-arrow {
+    left: 3%;
+  }
+
+  .nav-links {
+    right: 3%;
+    gap: 12px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  /* Hero section móvil */
+  .hero {
+    padding: 0 5%;
+    padding-bottom: 5vh;
+  }
+
+  .hero h1 {
+    font-size: 36px !important;
+  }
+
+  .hero p {
+    font-size: 16px !important;
+  }
+
+  .cta {
+    flex-direction: column;
+    gap: 12px !important;
+    margin-top: 20px !important;
+  }
+
+  .btn {
+    padding: 12px 24px !important;
+    font-size: 13px !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Glass sections móvil */
+  .glass {
+    padding: 40px 20px !important;
+    margin: 0 5% !important;
+    max-width: 90% !important;
+  }
+
+  section h2 {
+    font-size: 28px !important;
+  }
+
+  section p {
+    font-size: 15px;
+  }
+
+  /* Servicios grid móvil */
+  .services, .steps {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  /* Formulario móvil */
+  form {
+    padding: 0 !important;
+  }
+
+  form input,
+  form select,
+  form textarea {
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+
+  form button {
+    font-size: 15px;
+    padding: 14px;
+  }
+
+  /* Horizontal scroll móvil */
+  #horizontal-section {
+    height: auto !important;
+    padding: 60px 0;
+  }
+
+  #horizontal-track {
+    flex-direction: column !important;
+    transform: none !important;
+    gap: 40px;
+    padding: 0 5%;
+  }
+
+  .project-card {
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .project-card img {
+    height: 250px;
+  }
+
+  /* Footer móvil */
+  footer {
+    padding: 0 5% 15px 5%;
+  }
+
+  footer > img {
+    height: 140px;
+    margin-top: -30px;
+  }
+
+  .social-icons {
+    gap: 20px;
+    margin-top: -60px;
+  }
+
+  .social-icons a img[alt="Instagram"] {
+    width: 30px;
+    height: 48px;
+  }
+
+  .social-icons a img[alt="TikTok"] {
+    width: 56px;
+    height: 48px;
+  }
+
+  footer div {
+    font-size: 12px;
+  }
+
+  /* Video container móvil */
+  .video-container {
+    max-width: 100%;
+    padding-bottom: 75%; /* Más alto para móvil */
+  }
+
+  /* Contact button móvil */
+  .contact-section {
+    padding: 60px 5%;
+  }
+
+  .contact-btn {
+    padding: 14px 30px;
+    font-size: 15px;
+    width: 80%;
+  }
+
+  /* Project meta móvil */
+  .project-meta {
+    flex-direction: column !important;
+    gap: 20px !important;
+    text-align: center;
+  }
+
+  /* Modal móvil */
+  .modal-content {
+    width: 90% !important;
+    padding: 30px 20px !important;
+  }
+
+  .modal-content h3 {
+    font-size: 22px;
+  }
+
+  .modal-content p {
+    font-size: 15px;
+  }
+
+  .whatsapp-btn {
+    font-size: 14px !important;
+    padding: 12px 24px !important;
+  }
+}
+
+/* Tablets y pantallas medianas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav img {
+    height: 180px;
+  }
+
+  .hero h1 {
+    font-size: 48px !important;
+  }
+
+  .glass {
+    max-width: 80% !important;
+  }
+
+  .services, .steps {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  #horizontal-track {
+    gap: 40px;
+  }
+
+  .project-card {
+    min-width: 400px !important;
+  }
+}
