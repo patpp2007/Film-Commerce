@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       background: #000;
-      height: 100%;
+      min-height: 100vh;
     }
 
     body {
@@ -62,21 +62,23 @@
       transition: height 0.3s ease;
     }
 
-    .nav-links {
-      position: absolute;
-      right: 5%;
-      display: flex;
-      gap: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-    }
+    @media (min-width: 769px) {
+      .nav-links {
+        position: absolute;
+        right: 5%;
+        display: flex;
+        gap: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
 
-    .nav-links.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
+      .nav-links.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
     }
 
     .nav-link {
@@ -888,11 +890,13 @@
         horizontalTrack.style.transform = `translateX(-${horizontalCurrentX}px)`;
       }
 
-      // Toggle Navbar Links based on scroll position
-      if (window.scrollY > 100) {
-        navLinks.classList.add('visible');
-      } else {
-        navLinks.classList.remove('visible');
+      // Toggle Navbar Links based on scroll position (Desktop only)
+      if (window.innerWidth > 768) {
+        if (window.scrollY > 100) {
+          navLinks.classList.add('visible');
+        } else {
+          navLinks.classList.remove('visible');
+        }
       }
 
       requestAnimationFrame(raf);
