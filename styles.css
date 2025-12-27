@@ -1,3 +1,10 @@
+@media (max-width: 768px) {
+  .qh-bloque, .ct-bloque {
+    transform: translateY(-18px);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    transition: transform 0.4s cubic-bezier(.77,0,.18,1), box-shadow 0.4s cubic-bezier(.77,0,.18,1);
+  }
+}
 /* ===== RESET BÁSICO ===== */
 html, body {
   margin: 0;
@@ -10,6 +17,68 @@ html, body {
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
+}
+
+/* ===== VIDEO DE FONDO GLOBAL ===== */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(0px);
+}
+
+.bg-video__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 769px) {
+  /* En escritorio: que el texto de enfoque no se recorte y quede más abajo */
+  #quienes-somos-container .sticky-wrapper {
+    overflow: visible !important;
+  }
+
+  #focus-text {
+    top: 70% !important;
+    text-align: center !important;
+  }
+
+  .desktop-only {
+    display: block !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  .focus-full {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    line-height: 1.4;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    font-weight: 400;
+    color: #fff;
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
 }
 
 section {
@@ -304,6 +373,58 @@ footer strong {
 
 /* ===== RESPONSIVE DESIGN - MOBILE ===== */
 @media (max-width: 768px) {
+  html, body {
+    min-height: 100dvh !important;
+  }
+
+  /* Fix barra negra móvil por unidades vh dinámicas */
+  #dark-overlay {
+    height: 100dvh !important;
+  }
+
+  #quienes-somos-container {
+    margin-top: 100dvh !important;
+  }
+
+  /* En móvil: scroll normal (sin sticky) en 'Quiénes somos' */
+  #quienes-somos-container {
+    height: auto !important;
+    padding: 100px 8% !important;
+  }
+
+  #quienes-somos-container .sticky-wrapper {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+
+  #focus-text {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 1000px;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    margin-top: 24px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  #focus-text .text-line-wrapper {
+    text-align: center !important;
+  }
+
+  /* En móvil: efecto de texto más lento (renglón por renglón) */
+  #focus-text .text-line {
+    transition-duration: 1.9s !important;
+  }
+
   /* Menú hamburguesa */
   .hamburger {
     display: flex;
@@ -312,7 +433,8 @@ footer strong {
     background: none;
     border: none;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
+    top: 16px;
     right: 5%;
     z-index: 1000;
     padding: 5px;
@@ -337,23 +459,26 @@ footer strong {
     transform: rotate(-45deg) translate(7px, -7px);
   }
 
-  /* Navbar móvil */
-  nav {
-    height: 60px;
-    padding: 8px 0;
+  /* Navbar móvil (solo HOME; no aplica a páginas de proyecto) */
+  body:not(.project-page) nav {
+    height: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border-bottom: none !important;
   }
 
-  nav img {
-    height: 140px;
+  body:not(.project-page) nav img {
+    display: none !important;
   }
 
-  .back-arrow {
+  body:not(.project-page) .back-arrow {
     left: 3%;
   }
 
-  .nav-links {
+  body:not(.project-page) .nav-links {
     position: fixed;
-    top: 60px;
+    top: 56px;
     right: -100%;
     width: 200px;
     background: rgba(0, 0, 0, 0.95);
@@ -369,11 +494,11 @@ footer strong {
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
   }
 
-  .nav-links.mobile-open {
+  body:not(.project-page) .nav-links.mobile-open {
     right: 0;
   }
 
-  .nav-link {
+  body:not(.project-page) .nav-link {
     font-size: 14px;
     padding: 10px;
     text-align: left;
@@ -383,16 +508,32 @@ footer strong {
     margin: 0 !important;
   }
 
-  /* Hero section móvil */
-  .hero {
+  /* Hero section móvil (solo HOME; no aplica a páginas de proyecto) */
+  body:not(.project-page) .hero {
     padding: 0 5%;
-    padding-bottom: 5vh;
+    padding-bottom: 0 !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+
+  /* Asegura que el contenido vaya encima del hero fijo */
+  #quienes-somos-container,
+  #horizontal-section,
+  #trabajos,
+  #contacto {
+    position: relative;
+    z-index: 5 !important;
   }
 
   .hero h1 {
     font-size: 32px !important;
     line-height: 1.2;
-    word-spacing: 100vw; /* Forzar saltos de línea en palabras largas */
+    word-spacing: normal;
   }
 
   .hero p {
@@ -421,6 +562,94 @@ footer strong {
     padding: 40px 20px !important;
     margin: 0 5% !important;
     max-width: 90% !important;
+  }
+
+  /* Móvil: en los 2 cuadros, títulos/subtítulos más arriba */
+  #services-mobile .glass {
+    padding-top: 14px !important;
+  }
+
+  /* Móvil: separar los 2 cuadros de "Qué hacemos" y "Cómo trabajamos" */
+  #services-mobile .glass {
+    margin-bottom: 28px !important;
+  }
+
+  #services-mobile .glass:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Móvil: subtítulo más pegado al título */
+  #services-mobile .glass h2 {
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+  }
+
+  #services-mobile .glass > h2 + p {
+    margin-top: 0 !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Móvil: "Video/Fotografía/Contenido digital" y similares más pegados a su texto */
+  #services-mobile .glass h3 {
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+  }
+
+  #services-mobile .glass h3 + p {
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Móvil: por defecto SIEMPRE visible (fallback si falla JS/observer) */
+  #services-mobile .glass {
+    position: relative;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Móvil: efecto moderno de aparición (solo cuando el reveal está habilitado) */
+  html.reveal-enabled #services-mobile .glass {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(8px);
+    transition:
+      opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+      filter 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: opacity, transform, filter;
+  }
+
+  html.reveal-enabled #services-mobile .glass:nth-child(1) { transition-delay: 0.05s; }
+  html.reveal-enabled #services-mobile .glass:nth-child(2) { transition-delay: 0.16s; }
+
+  html.reveal-enabled #services-mobile .glass.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  /* Móvil: servicios en scroll normal (evita que se "pierda" Cómo trabajamos) */
+  #services-pin {
+    height: auto;
+    margin-top: 12vh;
+  }
+
+  /* Móvil: Proyectos pasa por encima (sin empujar lo de arriba) */
+  #trabajos {
+    position: relative;
+    z-index: 6 !important;
+    margin-top: 12vh;
+  }
+
+  #services-mobile.services-sticky {
+    position: relative;
+    top: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
   }
 
   section h2 {
@@ -619,29 +848,53 @@ footer strong {
   }
 
   /* Páginas de proyectos móvil */
-  body > nav {
-    height: 70px !important;
+  body.project-page {
+    --project-nav-h: 64px;
   }
 
-  .hero {
-    height: 60vh !important;
+  body.project-page > nav {
+    height: var(--project-nav-h) !important;
+    padding: 6px 0 !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  body.project-page nav img {
+    display: block !important;
+    height: 190px !important;
+  }
+
+  body.project-page .hero {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding-top: var(--project-nav-h) !important;
+    box-sizing: border-box;
     background-position: center !important;
   }
 
-  .hero span {
+  body.project-page .hero > div {
+    margin-top: 6vh;
+  }
+
+  body.project-page .hero span {
     font-size: 11px !important;
     letter-spacing: 2px !important;
   }
 
-  .hero h1 {
+  body.project-page .hero h1 {
     font-size: 32px !important;
   }
 
-  section {
+  body.project-page section {
     padding: 60px 5% !important;
   }
 
-  section .video-container {
+  body.project-page section .video-container {
     max-width: 100%;
     margin-top: 30px;
   }

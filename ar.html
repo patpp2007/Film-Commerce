@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ar Seminuevos| Film Commerce</title>
   <link rel="stylesheet" href="styles.css">
   <style>
@@ -135,19 +136,135 @@
       white-space: nowrap;
     }
 
+    /* Navbar: en compu vuelve a estilos originales (styles.css).
+       Los ajustes de tamaño se aplican SOLO en móvil (ver media query). */
+
+    /* Quita cualquier borde/"barra" heredada de los links dentro del nav */
+    nav a {
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    nav img {
+      display: block;
+    }
+
+    /* Flecha volver más grande */
+    .back-arrow {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-arrow svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* En páginas de proyecto: menú hamburguesa a la DERECHA y más grande */
+    .hamburger {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      background: transparent;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      position: absolute !important;
+      left: auto !important;
+      right: 4% !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 1000;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 34px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+    }
+
+    /* (sin override) back-arrow queda en su lugar */
+
+    /* En páginas de proyecto: el botón de contáctanos NO aparece al bajar;
+       queda dentro del menú (drawer) y solo abre con hamburguesa */
+    .nav-links {
+      position: fixed !important;
+      top: 84px;
+      right: -100% !important;
+      width: 220px;
+      display: flex !important;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 10px 0 0 10px;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+      transform: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+
+    .nav-links.visible {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: none !important;
+    }
+
+    .nav-links.mobile-open {
+      right: 0 !important;
+    }
+
     /* Responsive móvil */
     @media (max-width: 768px) {
       nav {
-        height: 70px !important;
+        height: 64px !important;
+        padding: 6px 0 !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .nav-links {
+        top: 64px !important;
+      }
+
+      .back-arrow {
+        width: 56px !important;
+        height: 56px !important;
+      }
+
+      .back-arrow svg {
+        width: 34px !important;
+        height: 34px !important;
+      }
+
+      .hamburger {
+        padding: 12px !important;
+        gap: 7px !important;
+      }
+
+      .hamburger span {
+        width: 34px !important;
+        height: 3px !important;
+        border-radius: 3px !important;
       }
 
       nav img {
-        height: 160px !important;
-      }
-
-      .hero {
-        height: 55vh !important;
-        background-position: center !important;
+        display: block !important;
+        height: 158px !important;
       }
 
       .hero span {
@@ -191,11 +308,16 @@
   </style>
 </head>
 
-<body>
+<body class="project-page">
   <!-- NAVBAR -->
   <nav>
+    <button class="hamburger" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <a href="index.html" class="back-arrow" aria-label="Volver">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 12H5M12 19l-7-7 7-7"/>
       </svg>
     </a>
@@ -219,17 +341,16 @@
 
   <!-- INFO -->
   <section>
-   <div class="project-meta">
-  <div>
-    <span>CLIENTE</span>
-    <p>Ar Seminuevos</p>
-  </div>
-  <div>
-    <span>TIPOLOGÍA</span>
-    <p>Branding Commercial</p>
-  </div>
-</div>
-
+    <div class="project-meta">
+      <div class="meta-item">
+        <span>CLIENTE</span>
+        <p>Ar Seminuevos</p>
+      </div>
+      <div class="meta-item">
+        <span>TIPOLOGÍA</span>
+        <p>Branding Commercial</p>
+      </div>
+    </div>
 
     <div class="video-container">
       <iframe 
@@ -274,18 +395,19 @@
       touchMultiplier: 2,
     });
 
-    // Navbar Links Visibility
     const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
+
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('mobile-open');
+        hamburger.classList.toggle('active', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
 
     function raf(time) {
       lenis.raf(time);
-      
-      // Toggle Navbar Links based on scroll position
-      if (window.scrollY > 100) {
-        navLinks.classList.add('visible');
-      } else {
-        navLinks.classList.remove('visible');
-      }
 
       requestAnimationFrame(raf);
     }
