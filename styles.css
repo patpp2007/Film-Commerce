@@ -303,6 +303,39 @@ footer strong {
 
 /* ===== RESPONSIVE DESIGN - MOBILE ===== */
 @media (max-width: 768px) {
+  /* Menú hamburguesa */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    z-index: 1000;
+    padding: 5px;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 2px;
+    background: #fff;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
   /* Navbar móvil */
   nav {
     height: 60px;
@@ -318,13 +351,35 @@ footer strong {
   }
 
   .nav-links {
-    right: 3%;
-    gap: 12px;
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    border-radius: 10px 0 0 10px;
+    transition: right 0.3s ease;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
   }
 
   .nav-link {
-    font-size: 12px;
-    padding: 6px 12px;
+    font-size: 14px;
+    padding: 10px;
+    text-align: left;
+    display: block;
+    width: 100%;
+    border: none !important;
+    margin: 0 !important;
   }
 
   /* Hero section móvil */
@@ -334,24 +389,30 @@ footer strong {
   }
 
   .hero h1 {
-    font-size: 36px !important;
+    font-size: 32px !important;
+    line-height: 1.2;
+    word-spacing: 100vw; /* Forzar saltos de línea en palabras largas */
   }
 
   .hero p {
     font-size: 16px !important;
+    margin-top: 10px !important;
   }
 
   .cta {
-    flex-direction: column;
-    gap: 12px !important;
-    margin-top: 20px !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+    justify-content: center;
   }
 
   .btn {
-    padding: 12px 24px !important;
-    font-size: 13px !important;
-    width: 100%;
+    padding: 10px 18px !important;
+    font-size: 12px !important;
+    width: auto !important;
+    flex: 1;
     text-align: center;
+    max-width: 150px;
   }
 
   /* Glass sections móvil */
@@ -369,10 +430,32 @@ footer strong {
     font-size: 15px;
   }
 
-  /* Servicios grid móvil */
+  /* Servicios y pasos en bloques móvil */
   .services, .steps {
-    grid-template-columns: 1fr !important;
-    gap: 30px !important;
+    display: block !important;
+    gap: 0 !important;
+  }
+
+  .services > div, .steps > div {
+    padding: 25px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateX(-50px) translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .services > div.visible, .steps > div.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+
+  .services > div h3, .steps > div h3 {
+    margin-top: 0;
   }
 
   /* Formulario móvil */
@@ -383,7 +466,7 @@ footer strong {
   form input,
   form select,
   form textarea {
-    font-size: 16px; /* Evita zoom en iOS */
+    font-size: 16px;
   }
 
   form button {
@@ -407,10 +490,47 @@ footer strong {
   .project-card {
     min-width: 100% !important;
     width: 100% !important;
+    position: relative;
   }
 
   .project-card img {
-    height: 250px;
+    height: 300px;
+  }
+
+  .project-card h3 {
+    position: absolute;
+    bottom: 60px;
+    left: 20px;
+    right: 20px;
+    margin: 0;
+    font-size: 24px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+  }
+
+  .project-card a {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 13px;
+    margin-top: 0 !important;
+  }
+
+  .arrow {
+    width: 30px !important;
+    height: 30px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .arrow::before {
+    border-width: 0 2px 2px 0;
   }
 
   /* Footer móvil */
@@ -445,12 +565,12 @@ footer strong {
   /* Video container móvil */
   .video-container {
     max-width: 100%;
-    padding-bottom: 75%; /* Más alto para móvil */
+    padding-bottom: 75%;
   }
 
   /* Contact button móvil */
   .contact-section {
-    padding: 60px 5%;
+    padding: 30px 5%;
   }
 
   .contact-btn {
@@ -464,6 +584,18 @@ footer strong {
     flex-direction: column !important;
     gap: 20px !important;
     text-align: center;
+  }
+
+  .project-meta > div {
+    font-size: 18px !important;
+  }
+
+  .project-meta span {
+    font-size: 14px !important;
+  }
+
+  .project-meta p {
+    font-size: 16px !important;
   }
 
   /* Modal móvil */
@@ -484,31 +616,43 @@ footer strong {
     font-size: 14px !important;
     padding: 12px 24px !important;
   }
-}
 
-/* Tablets y pantallas medianas */
-@media (min-width: 769px) and (max-width: 1024px) {
-  nav img {
-    height: 180px;
+  /* Páginas de proyectos móvil */
+  body > nav {
+    height: 70px !important;
+  }
+
+  .hero {
+    height: 60vh !important;
+    background-position: center !important;
+  }
+
+  .hero span {
+    font-size: 11px !important;
+    letter-spacing: 2px !important;
   }
 
   .hero h1 {
-    font-size: 48px !important;
+    font-size: 32px !important;
   }
 
-  .glass {
-    max-width: 80% !important;
+  section {
+    padding: 60px 5% !important;
   }
 
-  .services, .steps {
-    grid-template-columns: repeat(2, 1fr) !important;
+  section .video-container {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+
+/* Desktop: Texto más grande */
+@media (min-width: 769px) {
+  .hamburger {
+    display: none;
   }
 
-  #horizontal-track {
-    gap: 40px;
-  }
-
-  .project-card {
-    min-width: 400px !important;
+  #quienes-somos-text p {
+    font-size: 20px !important;
   }
 }

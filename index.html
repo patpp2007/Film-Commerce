@@ -354,67 +354,67 @@
     
     .light-1 {
       top: 25%;
-      right: 10%; /* Más adentro */
-      width: 900px; /* Más larga */
+      left: 50%;
+      transform: translateX(-50%) rotate(-25deg);
+      width: 900px;
       height: 50px;
-      transform: rotate(-25deg);
     }
 
     .light-2 {
       top: 40%;
-      right: 20%; /* Bastante adentro */
+      left: 45%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 700px;
       height: 35px;
-      transform: rotate(-25deg);
     }
 
     .light-3 {
       top: 55%;
-      right: 5%;
-      width: 1000px; /* Cruza casi todo */
+      left: 55%;
+      transform: translateX(-50%) rotate(-25deg);
+      width: 1000px;
       height: 60px;
-      transform: rotate(-25deg);
     }
 
     .light-4 {
       top: 65%;
-      right: 25%;
+      left: 48%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 600px;
       height: 30px;
-      transform: rotate(-25deg);
     }
 
     .light-5 {
       top: 75%;
-      right: 15%;
+      left: 52%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 800px;
       height: 45px;
-      transform: rotate(-25deg);
     }
 
     .light-6 {
       top: 85%;
-      right: 30%;
+      left: 47%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 500px;
       height: 25px;
-      transform: rotate(-25deg);
     }
 
     .light-7 {
       top: 35%;
-      right: 40%; /* Bien al centro */
+      left: 50%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 400px;
       height: 20px;
-      transform: rotate(-25deg);
       opacity: 0;
     }
 
     .light-8 {
       top: 95%;
-      right: 10%;
+      left: 53%;
+      transform: translateX(-50%) rotate(-25deg);
       width: 900px;
       height: 50px;
-      transform: rotate(-25deg);
     }
   </style>
 </head>
@@ -422,10 +422,20 @@
 
   <!-- NAVBAR -->
   <nav>
-    <img src="assets/Film Commerce-white.png" alt="Film Commerce">    <div class="nav-links">
+    <img src="assets/Film Commerce-white.png" alt="Film Commerce">
+    
+    <!-- Menú hamburguesa para móvil -->
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <div class="nav-links" id="navLinks">
       <a href="#trabajos" class="nav-link">PORTAFOLIO</a>
       <a href="#contacto" class="nav-link">CONTÁCTANOS</a>
-    </div>  </nav>
+    </div>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
@@ -484,8 +494,8 @@
           <div class="text-line" style="transition-delay: 0.1s;">Nuestro enfoque nace de ahí:</div>
           <div class="text-line" style="transition-delay: 0.4s;">tratar el contenido audiovisual como una parte clave</div>
           <div class="text-line" style="transition-delay: 0.2s;">de la identidad de una marca</div>
-          <div class="text-line" style="transition-delay: 0.5s;">y cuidar cada detalle para que lo que se muestra</div>
-          <div class="text-line" style="transition-delay: 0.3s;">esté a la altura de lo que la empresa realmente es.</div>
+          <div class="text-line mobile-hidden" style="transition-delay: 0.5s;">y cuidar cada detalle para que lo que se muestra</div>
+          <div class="text-line mobile-hidden" style="transition-delay: 0.3s;">esté a la altura de lo que la empresa realmente es.</div>
         </div>
       </div>
 
@@ -493,6 +503,16 @@
   </section>
 
   <style>
+    .mobile-hidden {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-hidden {
+        display: none !important;
+      }
+    }
+
     .text-line {
       clip-path: inset(0 100% 0 0);
       transition: clip-path 1.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -880,6 +900,26 @@
 
     requestAnimationFrame(raf);
 
+    // Menú hamburguesa
+    const hamburger = document.getElementById('hamburger');
+    const navLinksMenu = document.getElementById('navLinks');
+    
+    if (hamburger && navLinksMenu) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinksMenu.classList.toggle('mobile-open');
+      });
+
+      // Cerrar menú al hacer clic en un link
+      const links = navLinksMenu.querySelectorAll('.nav-link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinksMenu.classList.remove('mobile-open');
+        });
+      });
+    }
+
     // Manejar envío del formulario
     const contactForm = document.getElementById('contactForm');
     const confirmModal = document.getElementById('confirmModal');
@@ -933,6 +973,29 @@
           confirmModal.classList.remove('active');
         });
       }
+    }
+
+    // Animación de entrada para servicios y pasos en móvil
+    if (window.innerWidth <= 768) {
+      const services = document.querySelectorAll('.services > div');
+      const steps = document.querySelectorAll('.steps > div');
+      
+      const observerOptions = {
+        root: null,
+        threshold: 0.2,
+        rootMargin: '0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+      
+      services.forEach(service => observer.observe(service));
+      steps.forEach(step => observer.observe(step));
     }
   </script>
 
